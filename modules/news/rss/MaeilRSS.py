@@ -3,12 +3,13 @@ import os
 import re
 import requests
 import xml.etree.ElementTree as ET
-from modules.news.News import News
+# from modules.news.NewsProviderInfo import News
 from data.NewsInfo import NewsInfo
+from modules.news.rss.RSS import RSS
 
-class MaeilNews(News):
+class MaeilNews(RSS):
 
-    def getRSSdata(url:str):
+    def getRssData(url:str):
 
         response = requests.get(url=url)
         result = []
