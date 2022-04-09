@@ -1,3 +1,5 @@
+from time import sleep
+import time
 import modules.news.NewsProviderInfo as NP
 from modules.news.rss.RSS import RSS
 
@@ -11,7 +13,7 @@ class NewsCollecter:
 
     def start(self):
         
-        # @@@@@ get data / tich = 1min
+        # @@@@@ get data / tick = 1min
 
         for provider in self._newsProviderList:
 
@@ -29,5 +31,7 @@ class NewsCollecter:
                 print("need to implement...")
 
             # colleting data
+            
 
 
+            time.sleep(60)  # time tick 1min.

@@ -1,5 +1,12 @@
 from modules.NewsCollecter import NewsCollecter
 from modules.news.NewsProviderInfo import RSS_PROVIDER
+from modules.database.NewsDBController import NewsDB
+
+### init.
+# database
+db = NewsDB()
+db.connect()
+# logging
 
 
 nc = NewsCollecter()
