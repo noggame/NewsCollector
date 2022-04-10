@@ -2,6 +2,7 @@ from time import sleep
 import time
 import modules.news.NewsProviderInfo as NP
 from modules.news.rss.RSS import RSS
+from modules.database.NewsDBController import NewsDB as ndb
 
 
 class NewsCollecter:
@@ -13,8 +14,6 @@ class NewsCollecter:
 
     def start(self):
         
-        # @@@@@ get data / tick = 1min
-
         for provider in self._newsProviderList:
 
             if type(provider) == NP.RSS_PROVIDER:
@@ -25,13 +24,16 @@ class NewsCollecter:
                 rss_url = NP.URL[rss_name].value
 
                 # collecting data
-                rss.getRssData(rss_url)
+                newsList = rss.getRssData(rss_url)
+                if not newsList:
+                    continue
+                
+                for newsData in newsList:
+                    ndb().addNewsData(newsData)
+                print("[SUCCESS] {} data is stored on NewsDB".format(rss_name))
             
             else:   # case for formats isn't implemented RSS
                 print("need to implement...")
-
-            # colleting data
-            
 
 
             time.sleep(60)  # time tick 1min.

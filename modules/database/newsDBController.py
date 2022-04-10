@@ -1,11 +1,17 @@
+import json
 import mariadb
 import sys
 import conf.cfgParser as cp
+from data.NewsInfo import NewsInfo
 from modules.DesignPattern import MetaSingleton
 
 class NewsDB(metaclass=MetaSingleton):
     _connection = None
     _cur = None
+
+    def init(self):
+        self.connect()
+        self.createNewsTable(cp.get('mysql', 'table'))
 
     def connect(self):
         try:
@@ -18,8 +24,6 @@ class NewsDB(metaclass=MetaSingleton):
                     database = cp.get('mysql', 'database')
                 )
                 self._cur = self._connection.cursor()
-
-            # return self._cur
             
         except mariadb.Error as e:
             print(f"Error connecting to the database: {e}")
@@ -30,14 +34,17 @@ class NewsDB(metaclass=MetaSingleton):
         self._cur.execute(f"CREATE TABLE IF NOT EXISTS {table_name} (\
             idx INT NOT NULL AUTO_INCREMENT, \
             id VARCHAR(15) NOT NULL, \
-            title VARCHAR(30) NOT NULL, \
-            contents VARCHAR(100), \
-            link VARCHAR(50), \
+            title TEXT NOT NULL, \
+            contents TEXT, \
+            link TEXT, \
             PRIMARY KEY (idx, id))")
 
 
-    def addNewsData(self, id, title, contents, link):
+    def addNewsData(self, newsData:NewsInfo):
         try:
-            self._cur.execute("INSERT INTO mytable SET id={}, title={}, contents={}, link={}".format(id, title, contents, link))
-        except:
-            print("[WARN] fail to insert news data")
+            self._cur.execute("INSERT INTO {} SET id='{}', title='{}', contents='{}', link='c'".format(cp.get('mysql', 'table'), newsData.id, str(newsData.title).replace("'", "''"), str(newsData.desc).replace("'", "''"), newsData.link))
+            self._connection.commit()
+        except mariadb.Error as e:
+            print(f"[WARN] fail to insert news data - {e}")
+
+

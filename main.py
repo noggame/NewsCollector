@@ -4,8 +4,8 @@ from modules.database.NewsDBController import NewsDB
 
 ### init.
 # database
-db = NewsDB()
-db.connect()
+ndb = NewsDB()
+ndb.init()
 # logging
 
 
