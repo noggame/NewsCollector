@@ -4,7 +4,7 @@ import re
 import requests
 import xml.etree.ElementTree as ET
 # from modules.news.NewsProviderInfo import News
-from data.NewsInfo import NewsInfo
+from data.NewsInfo import NewsData
 from modules.news.rss.RSS import RSS
 
 class MaeilNews(RSS):
@@ -20,7 +20,7 @@ class MaeilNews(RSS):
 
             for item in root.findall('./channel/item'):   # get items under channel
 
-                news = NewsInfo(id      = re.sub('[/]', '', item.find('no').text),      # YYYYMM#####
+                news = NewsData(id      = re.sub('[/]', '', item.find('no').text),      # YYYYMM#####
                                 title   = item.find('title').text,
                                 link    = item.find('link').text,
                                 desc    = item.find('description').text)
@@ -36,8 +36,8 @@ class MaeilNews(RSS):
 
         return result
 
-    def getNewsInfo(news:NewsInfo):
-        if not NewsInfo:
+    def getNewsInfo(news:NewsData):
+        if not NewsData:
             return None
         
         ### DB (news_list) #########################

@@ -1,5 +1,5 @@
 
-class NewsInfo:
+class NewsData:
     def __init__(self, id, title, link, desc) -> None:
         self._id = id
         self._title = title
@@ -10,7 +10,7 @@ class NewsInfo:
         return f'id = {self.id}\ntitle = {self.title}\nlink = {self.link}\ndesc = {self.desc}'
         
     def __eq__(self, __o: object) -> bool:
-        if isinstance(__o, NewsInfo):
+        if isinstance(__o, NewsData):
             return self.id == __o.id
         return False
 

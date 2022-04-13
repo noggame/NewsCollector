@@ -13,27 +13,28 @@ class NewsCollecter:
         self._newsProviderList.add(rss)
 
     def start(self):
-        
-        for provider in self._newsProviderList:
+        while True:
 
-            if type(provider) == NP.RSS_PROVIDER:
-                rss_name = NP.RSS_PROVIDER(provider).name
+            for provider in self._newsProviderList:
 
-                # rss info.
-                rss:RSS = NP.RSS_PROVIDER[rss_name].value
-                rss_url = NP.URL[rss_name].value
+                if type(provider) == NP.RSS_PROVIDER:
+                    rss_name = NP.RSS_PROVIDER(provider).name
 
-                # collecting data
-                newsList = rss.getRssData(rss_url)
-                if not newsList:
-                    continue
+                    # rss info.
+                    rss:RSS = NP.RSS_PROVIDER[rss_name].value
+                    rss_url = NP.URL[rss_name].value
+
+                    # collecting data
+                    newsList = rss.getRssData(rss_url)
+                    if not newsList:
+                        continue
+                    
+                    for newsData in newsList:
+                        ndb().addNewsData(newsData)
+                    print("[SUCCESS] {} data is stored on NewsDB".format(rss_name))
                 
-                for newsData in newsList:
-                    ndb().addNewsData(newsData)
-                print("[SUCCESS] {} data is stored on NewsDB".format(rss_name))
-            
-            else:   # case for formats isn't implemented RSS
-                print("need to implement...")
+                else:   # case for formats isn't implemented RSS
+                    print("need to implement...")
 
 
-            time.sleep(60)  # time tick 1min.
+                time.sleep(10)  # time tick 1min.

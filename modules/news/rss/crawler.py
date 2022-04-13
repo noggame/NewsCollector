@@ -2,7 +2,7 @@
 # import os
 import requests
 import xml.etree.ElementTree as ET
-from data.NewsInfo import NewsInfo
+from data.NewsInfo import NewsData
 
 def getNewsFromMaeil(self, url):
     url = 'https://www.mk.co.kr/rss/30100041/'
@@ -13,7 +13,7 @@ def getNewsFromMaeil(self, url):
     root = tree.getroot()
     for item in root.findall('./channel/item'):
 
-        news = NewsInfo(id      = item.find('no').text,
+        news = NewsData(id      = item.find('no').text,
                     title   = item.find('title').text,
                     link    = item.find('link').text,
                     desc    = item.find('description').text)
