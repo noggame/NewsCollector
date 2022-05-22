@@ -3,7 +3,7 @@ import time
 import modules.news.NewsProviderInfo as NP
 from modules.news.rss.RSS import RSS
 from modules.database.NewsDBController import NewsDB as ndb
-
+import conf.cfgParser as cfg
 
 class NewsCollecter:
     def __init__(self) -> None:
@@ -37,4 +37,6 @@ class NewsCollecter:
                     print("need to implement...")
 
 
-                time.sleep(10)  # time tick 1min.
+                time.sleep(int(cfg.get('crawl', 'tick')))  # time tick
+
+            ndb().limitData(cfg.get('mysql', 'table_news'), 10000)

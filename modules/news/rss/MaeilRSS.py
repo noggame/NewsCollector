@@ -30,22 +30,4 @@ class MaeilNews(RSS):
         else:
             print("bad response : {}".format(response.status_code))
 
-
-        ### 파일 검사해서 중복되는 데이터 제외 후 추가
-        # rss_mk_file = f'rss_mk_{datetime.now().strftime("%Y%m%d%H%M%S")}.xml'     
-
         return result
-
-    def getNewsInfo(news:NewsData):
-        if not NewsData:
-            return None
-        
-        ### DB (news_list) #########################
-        # id, publisher, title, link, summary, reg
-        ############################################
-        
-        # db 검색 (with news.id)
-        
-        
-        # DB에 없으면 해당 링크에서 정보 파싱 및 업데이트
-        return None
